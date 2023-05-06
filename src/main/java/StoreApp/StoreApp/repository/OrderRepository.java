@@ -16,21 +16,12 @@ public interface OrderRepository extends JpaRepository<Order,Integer>{
 
 	Order findById(int id);
 	
-	@Query(value="Select * From `order` o ORDER BY o.id DESC LIMIT 5;",nativeQuery = true)
-	List<Order> findTop5RecentOrder();
-	
-	@Query(value="Select distinct o.user_id From `order` o ORDER BY o.id DESC LIMIT 5;",nativeQuery = true)
-	List<String> findTop5RecentCustomer();
-	
 	Page<Order> findAll(Pageable pageable);
 
 	void deleteById(int id);
 	
 	
-	@Query(value="select * from `order` o where o.payment_method = ?1",nativeQuery = true)
-	List<Order> findAllByPayment_Method(String payment_Method);
-	
-	@Query(value="Select * From `order` o where o.payment_method = ?1 ORDER BY o.id DESC LIMIT 5;",nativeQuery = true)
-	List<Order> findTop5OrderByPaymentMethod(String payment_method);
+	@Query(value="select * from `order` o where o.payment_method = ?1 and o.user_id = ?2",nativeQuery = true)
+	List<Order> findAllByPayment_Method(String payment_Method, String user_id);
 	
 }

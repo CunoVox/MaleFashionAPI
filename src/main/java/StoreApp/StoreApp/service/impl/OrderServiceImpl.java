@@ -33,14 +33,6 @@ public class OrderServiceImpl implements OrderService{
 		return orderRepository.findAll();
 	}
 	@Override
-	public List<Order> findTop5RecentOrder() {
-		return orderRepository.findTop5RecentOrder();
-	}
-	@Override
-	public List<String> findTop5RecentCustomer() {
-		return orderRepository.findTop5RecentCustomer();
-	}
-	@Override
 	public Page<Order> findAll(Pageable pageable) {
 		return orderRepository.findAll(pageable);
 	}
@@ -49,13 +41,8 @@ public class OrderServiceImpl implements OrderService{
 		orderRepository.deleteById(id);
 	}
 	@Override
-	public List<Order> findAllByPayment_Method(String payment_Method) {
-		return orderRepository.findAllByPayment_Method(payment_Method);
+	public List<Order> findAllByPayment_Method(String payment_Method, String user_id) {
+		return orderRepository.findAllByPayment_Method(payment_Method, user_id);
 	}
-	@Override
-	public List<Order> findTop5OrderByPaymentMethod(String payment_method) {
-		return orderRepository.findTop5OrderByPaymentMethod(payment_method);
-	}
-	
 	
 }

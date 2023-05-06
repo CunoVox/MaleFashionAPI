@@ -44,7 +44,7 @@ public class OrderController {
     private ModelMapper modelMapper;
 	
 	@PostMapping(path = "/placeorder", consumes = "application/x-www-form-urlencoded")
-	public ResponseEntity<Order> placeOrder(String user_id, String fullname, String phoneNumber, String address){
+	public ResponseEntity<Order> placeOrder(String user_id, String fullname, String phoneNumber, String address, String paymentMethod){
 		List<Cart> listCart = cartService.GetAllCartByUser_id(user_id);
 		Order newOrder = new Order();
 		User user = userService.findByIdAndRole(user_id, "user");
@@ -59,7 +59,7 @@ public class OrderController {
 		newOrder.setBooking_Date(booking_date);
 		newOrder.setCountry("Việt Nam");
 		newOrder.setEmail(user.getEmail());
-		newOrder.setPayment_Method("Payment on delivery");
+		newOrder.setPayment_Method(paymentMethod);
 		newOrder.setAddress(address);
 		newOrder.setNote(null);
 		newOrder.setPhone(phoneNumber);
@@ -93,10 +93,25 @@ public class OrderController {
 		List<Order> listOrder = orderService.getAllOrderByUser_Id(user_id);
 		List<OrderDto> listOrderDto = new ArrayList<>();
 		for(Order o: listOrder) {
-			System.out.println(o.toString());
 			OrderDto orderDto = modelMapper.map(o, OrderDto.class);
-			System.out.println(orderDto.toString());
+			System.out.println(orderDto.getId());
 			listOrderDto.add(orderDto);
+		}
+		return new ResponseEntity<>(listOrderDto, HttpStatus.OK);
+	}
+	
+	@GetMapping(path = "/ordermethod")
+	public ResponseEntity<List<OrderDto>> getOrderByPaymentMethod(String user_id, String method){
+		System.out.println(user_id);
+		List<Order> listOrder = orderService.findAllByPayment_Method(method, user_id);
+		List<OrderDto> listOrderDto = new ArrayList<>();
+		for(Order o: listOrder) {
+			OrderDto orderDto = modelMapper.map(o, OrderDto.class);
+			
+			listOrderDto.add(orderDto);
+		}
+		for(Order o: listOrder) {
+		System.out.println(o.getId());
 		}
 		return new ResponseEntity<>(listOrderDto, HttpStatus.OK);
 	}
