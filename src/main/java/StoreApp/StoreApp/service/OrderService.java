@@ -22,4 +22,6 @@ public interface OrderService {
 	void deleteById(int id);
 
 	List<Order> findAllByPayment_Method(String payment_Method, String user_id);
+
+	List<Order> findAllByPayment_Method(String payment_Method);
 }

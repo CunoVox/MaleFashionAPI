@@ -45,4 +45,8 @@ public class OrderServiceImpl implements OrderService{
 		return orderRepository.findAllByPayment_Method(payment_Method, user_id);
 	}
 	
+	@Override
+	public List<Order> findAllByPayment_Method(String payment_Method) {
+		return orderRepository.findAllByPayment_Method(payment_Method);
+	}
 }

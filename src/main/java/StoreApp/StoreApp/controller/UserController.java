@@ -40,7 +40,7 @@ public class UserController {
 		System.out.println(id);
 		User userFind = userService.findByIdAndRole(id, "user");
 		
-		if (userFind.getPassword() != null) {
+		if (userFind != null && userFind.getPassword() != null) {
 			String decodedValue = new String(Base64.getDecoder().decode(userFind.getPassword()));
 			System.out.println(userFind);
 			if (password.equals(decodedValue)) {
